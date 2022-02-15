@@ -1,8 +1,8 @@
-const { request, response } = require('express')
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
-app.use(express.json())
+
 
 let contacts = [
   { 
@@ -27,6 +27,10 @@ let contacts = [
   }
 ]
 
+
+app.use(express.json())
+app.use(morgan('tiny'))
+
 app.get('/', (request, response) => {
   response.send('<h1>Server working</h1>')
 })
@@ -45,7 +49,6 @@ app.get('/api/contacts/:id', (request, response) => {
   
   contact ? response.json(contact) : response.status(404).end()
 
-  response.json(note)
 })
 
 //LIST ALL CONTACTS
@@ -109,6 +112,13 @@ app.post('/api/contacts', (request, response) => {
 
 })
 
+
+//used for catching requests made to non-existent routes *
+const unknownEndpoint = (request, response) =>{
+  response.status(404).send({error: 'unknow endpoint'})
+}
+
+app.use(unknownEndpoint)
 
 const PORT = 3000
 app.listen(PORT, () =>{
