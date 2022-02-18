@@ -13,7 +13,7 @@ const App = () => {
 
   useEffect(() => {
     axios 
-      .get('http://localhost:3000/api/notes')
+      .get('https://secret-woodland-45578.herokuapp.com/api/notes')
       .then(res => {
         setNotes(res.data)
       })
