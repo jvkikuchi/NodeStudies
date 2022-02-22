@@ -14,16 +14,23 @@ mongoose.connect(url)
 const noteSchema = new mongoose.Schema({
   content: String,
   date: Date,
-  import: Boolean
+  important: Boolean
 })
 
 const Note = mongoose.model('Note', noteSchema)
 
 const note = new Note({
-  content: 'Calculus is hard',
+  content: process.argv[3],
   date: new Date(),
   important: true,
 })
+
+// note.save().then(result => {
+//   console.log('note, saved!')
+//   mongoose.connection.close()
+// })
+
+
 
 Note.find({}).then(result =>{
   result.forEach(note =>{
